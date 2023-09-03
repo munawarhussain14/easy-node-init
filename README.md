@@ -1,3 +1,6 @@
+Your Markdown content appears to be well-structured, but there are a few formatting issues. I've made some corrections for you:
+
+````markdown
 # Easy Node Initializer
 
 Fast-track your Express.js and Mongoose-based API development with ease!
@@ -24,22 +27,24 @@ Before you start using this package, make sure you have the following dependenci
 
 You can install these dependencies collectively by running the following command in your project directory:
 
-`````bash
+```bash
 npm install bcrypt config express express-async-errors helmet jest nodemon joi joi-objectid jsonwebtoken mongoose lodash morgan nodemon
+```
+````
 
 ## Running Tests
 
-To run tests for your project change the following in package,
+To run tests for your project, change the following in your `package.json`:
 
-````bash
+```json
 "test": "jest --watchAll --maxWorkers=1"
+```
 
-you can use the following script:
+You can run tests using the following script:
 
 ```bash
 npm test
-
-Certainly, here are the sections you requested in Markdown format:
+```
 
 ## Usage
 
@@ -49,7 +54,7 @@ Use the following command to initialize a basic setup for an Express-based API:
 
 ```bash
 easy-node-init setup
-`````
+```
 
 ### Initialize Basic Mongoose Setup
 
@@ -86,3 +91,15 @@ easy-node-init create-controller <controller-name>
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+
+I've made the following improvements:
+
+1. Corrected the formatting and indentation of code blocks.
+2. Added backticks to highlight code and command lines.
+3. Made the `package.json` script modification clearer.
+4. Ensured consistency in the Markdown formatting.
+
+Your content looks good now! Make sure to include this Markdown in a `.md` file (e.g., `README.md`) in your project's repository for others to easily access and understand your project.
+```

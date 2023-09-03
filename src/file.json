@@ -1,0 +1,189 @@
+{
+  "boot": "app/boot/boot.js",
+  "setup": [
+    {
+      "source": "/templates/boot",
+      "destination": "app/boot",
+      "file": "boot.js"
+    },
+    {
+      "source": "/templates",
+      "destination": "app",
+      "file": "app.js"
+    },
+    {
+      "source": "/templates",
+      "destination": "app",
+      "file": "index.js"
+    },
+    {
+      "source": "/templates",
+      "destination": "app",
+      "file": "route.js"
+    },
+    {
+      "boot": true,
+      "require_path": "../middleware",
+      "source": "/templates/middleware",
+      "destination": "app/middleware",
+      "file": "error.js"
+    },
+    {
+      "boot": true,
+      "require_path": "./",
+      "source": "/templates/boot",
+      "destination": "app/boot",
+      "file": "logging.js"
+    },
+    {
+      "boot": true,
+      "require_path": "./",
+      "source": "/templates/boot",
+      "destination": "app/boot",
+      "file": "config.js"
+    },
+    {
+      "source": "/templates/configJson",
+      "destination": "config",
+      "file": "custom-environment-variables.json"
+    },
+    {
+      "source": "/templates/configJson",
+      "destination": "config",
+      "file": "default.json"
+    },
+    {
+      "source": "/templates/configJson",
+      "destination": "config",
+      "file": "development.json"
+    },
+    {
+      "source": "/templates/configJson",
+      "destination": "config",
+      "file": "production.json"
+    },
+    {
+      "source": "/templates/configJson",
+      "destination": "config",
+      "file": "test.json"
+    },
+    {
+      "source": "/templates/prebuild/base",
+      "destination": "app/modules/base",
+      "file": "controller.js"
+    },
+    {
+      "source": "/templates/prebuild/base",
+      "destination": "app/modules/base",
+      "file": "route.js"
+    }
+  ],
+  "setupDB": [
+    {
+      "boot": true,
+      "require_path": "./",
+      "source": "/templates/boot",
+      "destination": "app/boot",
+      "file": "validation.js"
+    },
+    {
+      "boot": true,
+      "call": true,
+      "require_path": "../config",
+      "source": "/templates/config",
+      "destination": "app/config",
+      "file": "database.js"
+    },
+    {
+      "source": "/templates/middleware",
+      "destination": "app/middleware",
+      "file": "validateObjectId.js"
+    }
+  ],
+  "auth": [
+    {
+      "source": "/templates/middleware",
+      "destination": "app/middleware",
+      "file": "admin.js"
+    },
+    {
+      "source": "/templates/middleware",
+      "destination": "app/middleware",
+      "file": "auth.js"
+    },
+    {
+      "source": "/templates/prebuild/user",
+      "destination": "app/modules/users",
+      "file": "controller.js"
+    },
+    {
+      "source": "/templates/prebuild/user",
+      "destination": "app/modules/users",
+      "file": "model.js"
+    },
+    {
+      "source": "/templates/prebuild/user",
+      "destination": "app/modules/users",
+      "file": "route.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "hashPassword.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "otp.js"
+    },
+    {
+      "source": "/templates/test/integration/users",
+      "destination": "tests/integration/users",
+      "file": "route.test.js"
+    }
+  ],
+  "createModule": [
+    {
+      "source": "/templates/module",
+      "destination": "app/modules/<module>",
+      "file": "controller.js"
+    },
+    {
+      "source": "/templates/module",
+      "destination": "app/modules/<module>",
+      "file": "model.js"
+    },
+    {
+      "source": "/templates/module",
+      "destination": "app/modules/<module>",
+      "file": "route.js"
+    },
+    {
+      "source": "/templates/test/integration",
+      "destination": "tests/integration/<module>",
+      "file": "route.test.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "pagination.js"
+    }
+  ],
+  "controller": [
+    {
+      "source": "/templates/pureModule",
+      "destination": "app/modules/<module>",
+      "file": "controller.js"
+    },
+    {
+      "source": "/templates/pureModule",
+      "destination": "app/modules/<module>",
+      "file": "route.js"
+    },
+    {
+      "source": "/templates/test/integration/pureTest",
+      "destination": "tests/integration/<module>",
+      "file": "route.test.js"
+    }
+  ]
+}

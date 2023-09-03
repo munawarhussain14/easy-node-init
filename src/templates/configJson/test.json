@@ -1,0 +1,6 @@
+{
+  "name": "Mineral Marche App - Development",
+  "db": "mongodb://127.0.0.1:27017/easy-node-init-dev",
+  "api_version": "v1",
+  "jwtPrivateKey": "1234"
+}

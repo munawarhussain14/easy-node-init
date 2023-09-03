@@ -1,0 +1,7 @@
+{
+  "name": "Easy Node Init",
+  "jwtPrivateKey": "",
+  "db": "mongodb://127.0.0.1:27017/easy-node-init",
+  "port": 5000,
+  "api_version": "v1"
+}

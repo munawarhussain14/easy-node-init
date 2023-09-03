@@ -1,6 +1,3 @@
-Your Markdown content appears to be well-structured, but there are a few formatting issues. I've made some corrections for you:
-
-````markdown
 # Easy Node Initializer
 
 Fast-track your Express.js and Mongoose-based API development with ease!
@@ -30,21 +27,57 @@ You can install these dependencies collectively by running the following command
 ```bash
 npm install bcrypt config express express-async-errors helmet jest nodemon joi joi-objectid jsonwebtoken mongoose lodash morgan nodemon
 ```
-````
 
-## Running Tests
+## Installation
 
-To run tests for your project, change the following in your `package.json`:
+Certainly! Here's the command for installing an npm package globally in Markdown format:
+
+**On Windows (run as Administrator):**
+
+```shell
+npm install -g easy-node-init
+```
+
+**On Linux/macOS (using sudo for superuser privileges):**
+
+```shell
+sudo npm install -g easy-node-init
+```
+
+add it in `package.json`
 
 ```json
-"test": "jest --watchAll --maxWorkers=1"
+"scripts": {
+    "start": "nodemon index.js",
+    "test": "jest --watchAll --verbose --coverage --maxWorkers=1"
+},
 ```
 
-You can run tests using the following script:
+To set your secret key in an environment variable run the command:
 
-```bash
+```shell
+export easynodeinti_jwtPrivateKey=<your-secret-key>
+```
+
+To enable debugging:
+
+```shell
+export debug=app:*
+```
+
+To start the server:
+
+```shell
+npm start
+```
+
+To run tests:
+
+```shell
 npm test
 ```
+
+Make sure to replace `<your-secret-key>` with your actual secret key when setting the `easynodeinti_jwtPrivateKey` environment variable.
 
 ## Usage
 
@@ -91,15 +124,3 @@ easy-node-init create-controller <controller-name>
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-
-I've made the following improvements:
-
-1. Corrected the formatting and indentation of code blocks.
-2. Added backticks to highlight code and command lines.
-3. Made the `package.json` script modification clearer.
-4. Ensured consistency in the Markdown formatting.
-
-Your content looks good now! Make sure to include this Markdown in a `.md` file (e.g., `README.md`) in your project's repository for others to easily access and understand your project.
-```

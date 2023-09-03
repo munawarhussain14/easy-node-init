@@ -16,7 +16,7 @@
     "api"
   ],
   "author": "Munawar Hussain",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "commander": "^11.0.0",
     "pluralize": "^8.0.0"

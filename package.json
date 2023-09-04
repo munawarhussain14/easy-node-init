@@ -1,6 +1,6 @@
 {
   "name": "easy-node-init",
-  "version": "1.0.2-beta.1",
+  "version": "1.0.2-beta.2",
   "description": "Kickstart your Node.js projects effortlessly using this CLI tool that automates project initialization and module integration.",
   "main": "index.js",
   "scripts": {

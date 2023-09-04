@@ -1,6 +1,7 @@
 const { initialze, fileExist } = require("../helper");
 const path = require("path");
 const files = require("../file.json");
+const { exec } = require("child_process");
 
 module.exports = function () {
   let rootPath = path.join(process.cwd(), "app");
@@ -8,7 +9,21 @@ module.exports = function () {
     console.warn(`Initial setup run once`);
     return;
   }
-  files.setup.map((obj) => {
-    initialze(obj);
-  });
+
+  console.log(`Installing necessary packages...`);
+  exec(
+    "npm i config express express-async-errors helmet lodash jest supertest joi joi-objectid morgan bcrypt jsonwebtoken mongoose",
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error running npm command: ${error}`);
+      } else {
+        console.log(`Setup files.....`);
+        console.log("Packages installed successfully.");
+        console.log("Setup files.");
+        files.setup.map((obj) => {
+          initialze(obj);
+        });
+      }
+    }
+  );
 };

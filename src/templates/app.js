@@ -21,6 +21,24 @@ if (app.get("env") === "development") {
 require("./route.js")(app);
 require("./boot/boot.js")(app);
 
+app.get("/", (req, res) => {
+  res.send(
+    `
+    <html>
+    <head>
+      <title>Welcome to Easy Node Init</title>
+    </head>
+    <body>
+      <center>
+      <h1>Welcome to Easy Node Init</h1>
+      <p>If you would like to assist in its growth, I would greatly appreciate it.</p>
+      <a href="/api/v1/">See API Base Reqeust</a>
+      <center>
+    </body>
+  </html>`
+  );
+});
+
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   startupDebugger(`Server listing on Port ${port}...`);

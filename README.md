@@ -6,26 +6,10 @@ The Easy Node Initializer is a powerful tool designed to simplify the process of
 
 ## Getting Started
 
-Before you start using this package, make sure you have the following dependencies installed in your project:
-
-- [bcrypt](https://www.npmjs.com/package/bcrypt)
-- [config](https://www.npmjs.com/package/config)
-- [express](https://www.npmjs.com/package/express)
-- [express-async-errors](https://www.npmjs.com/package/express-async-errors)
-- [helmet](https://www.npmjs.com/package/helmet)
-- [jest](https://www.npmjs.com/package/jest)
-- [nodemon](https://www.npmjs.com/package/nodemon)
-- [joi](https://www.npmjs.com/package/joi)
-- [joi-objectid](https://www.npmjs.com/package/joi-objectid)
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [mongoose](https://www.npmjs.com/package/mongoose)
-- [lodash](https://www.npmjs.com/package/lodash)
-- [morgan](https://www.npmjs.com/package/morgan)
-
-You can install these dependencies collectively by running the following command in your project directory:
+Install nodemon by running the following command in your project directory or modify it according to your ease:
 
 ```bash
-npm install bcrypt config express express-async-errors helmet jest nodemon joi joi-objectid jsonwebtoken mongoose lodash morgan nodemon
+npm i -g nodemon
 ```
 
 ## Installation

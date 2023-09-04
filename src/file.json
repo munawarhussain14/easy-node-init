@@ -13,7 +13,7 @@
     },
     {
       "source": "/templates",
-      "destination": "app",
+      "destination": "./",
       "file": "index.js"
     },
     {
@@ -31,12 +31,14 @@
     {
       "boot": true,
       "require_path": "./",
+      "call": true,
       "source": "/templates/boot",
       "destination": "app/boot",
       "file": "logging.js"
     },
     {
       "boot": true,
+      "call": true,
       "require_path": "./",
       "source": "/templates/boot",
       "destination": "app/boot",

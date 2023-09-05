@@ -4,6 +4,7 @@
  */
 
 const express = require("express");
+require("express-async-errors");
 const validateObjectId = require("../../middleware/validateObjectId");
 // const auth = require("../../middleware/auth");
 // const admin = require("../../middleware/admin");

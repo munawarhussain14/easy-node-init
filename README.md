@@ -73,6 +73,8 @@ Use the following command to initialize a basic setup for an Express-based API:
 easy-node-init setup
 ```
 
+[Initialize Basic Express Setup](https://www.youtube.com/watch?v=ZlsmPEERouQ)
+
 ### Initialize Basic Mongoose Setup
 
 To set up essential files for Mongoose, execute the following command:

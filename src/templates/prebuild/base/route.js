@@ -4,6 +4,7 @@
  */
 
 const express = require("express");
+require("express-async-errors");
 const router = express.Router();
 const { get } = require("./controller");
 

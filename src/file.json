@@ -83,6 +83,7 @@
   "setupDB": [
     {
       "boot": true,
+      "call":true,
       "require_path": "./",
       "source": "/templates/boot",
       "destination": "app/boot",

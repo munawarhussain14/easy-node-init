@@ -121,9 +121,18 @@ function validateOTP(user) {
   return schema.validate(user);
 }
 
+function validatePassword(user) {
+  const schema = Joi.object({
+    password: Joi.string().min(6).required(),
+  });
+
+  return schema.validate(user);
+}
+
 exports.validateAuth = validateAuth;
 exports.validate = validateUser;
 exports.validateResetPasswordReqeust = validateResetPasswordReqeust;
 exports.validateUserUpdate = validateUserUpdate;
 exports.validateOTP = validateOTP;
+exports.validatePassword = validatePassword;
 exports.User = mongoose.model("User", User);

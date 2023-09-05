@@ -13,6 +13,7 @@ const {
   validateResetPasswordReqeust,
   validateUserUpdate,
   validateOTP,
+  validatePassword,
 } = require("./model");
 const hashPassword = require("../../utils/hashPassword");
 const { createOTP } = require("../../utils/otp");
@@ -164,6 +165,24 @@ exports.passwordReset = async (req, res) => {
   await user.save();
 
   res.send({ success: true, message: "Password reset Successfully" });
+};
+
+
+exports.changePassword = async (req, res) => {
+
+  const { error } = validatePassword(req.body);
+
+  if (error) return res.status(400).send({ message: error.details[0].message });
+
+  let user = await User.findById(req.user._id);
+
+  flowDebugger("Change Password");
+
+  user.password = await hashPassword(req.body.password);
+
+  await user.save();
+
+  res.send({ success: true, message: "Password change Successfully" });
 };
 
 exports.deactivate = async (req, res) => {

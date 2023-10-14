@@ -1,14 +1,14 @@
 {
   "name": "easy-node-init",
-  "version": "1.0.2-beta.2",
+  "version": "1.0.2-beta.3",
   "description": "Kickstart your Node.js projects effortlessly using this CLI tool that automates project initialization and module integration.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon server.js",
     "test": "jest --watchAll --verbose --coverage --maxWorkers=1"
   },
   "bin": {
-    "easy-node-init": "./easy-node-init.js"
+    "eni": "./eni.js"
   },
   "keywords": [
     "nodejs",
@@ -22,16 +22,27 @@
   "bugs": {
     "url": "https://github.com/munawarhussain14/easy-node-init/issues"
   },
-  "homepage": "https://radicalscript.com/nodejs/easy-node-initializer/",
   "author": "Munawar Hussain",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "commander": "^11.0.0",
-    "pluralize": "^8.0.0"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^7.0.0",
+    "joi": "^17.10.1",
+    "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.5.1",
+    "morgan": "^1.10.0",
+    "pluralize": "^8.0.0",
+    "supertest": "^6.3.3"
   },
   "devDependencies": {
     "express-list-endpoints": "^6.0.0",
-    "jest": "^29.6.4",
+    "jest": "^29.7.0",
     "nodemon": "^3.0.1"
   }
 }

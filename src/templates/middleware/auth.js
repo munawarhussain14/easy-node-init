@@ -3,22 +3,40 @@
  * Create Date: **create_date**
  */
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const acl = require("../config/acl.json");
 
-function auth(req, res, next) {
-  const token = req.header("x-auth-token");
-  if (!token)
-    return res
-      .status(401)
-      .send({ success: false, message: "Access denied. No token provided." });
+module.exports.auth = (module = "none", nextFn = "none") => {
+  return (req, res, next) => {
+    const token = req.header("x-auth-token");
+    if (!token)
+      return res.status(401).send({
+        success: false,
+        message: "Invalid or expired token. Please log in again.",
+      });
 
-  try {
-    const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
-    req.user = decoded;
-    next();
-  } catch (er) {
-    res.status(400).send({ success: false, message: "Invalid token." });
-  }
-}
+    if (module === "none") {
+      res.status(403).send({
+        success: false,
+        message: "You do not have permission to perform this operation.",
+      });
+    }
 
-module.exports = auth;
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      req.user = decoded;
+      if (acl[req.user.role][module][nextFn]) {
+        next();
+      } else {
+        res.status(403).send({
+          success: false,
+          message: "You do not have permission to perform this operation.",
+        });
+      }
+    } catch (er) {
+      res.status(401).send({
+        success: false,
+        message: "Invalid or expired token. Please log in again.",
+      });
+    }
+  };
+};

@@ -6,9 +6,9 @@
 const express = require("express");
 require("express-async-errors");
 const router = express.Router();
-const { get } = require("./controller");
+const { fetch } = require("./controller");
 
-router.get("/", get);
+router.get("/", fetch);
 
 module.exports.router = router;
 

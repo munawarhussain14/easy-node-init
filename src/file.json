@@ -7,6 +7,15 @@
       "file": "boot.js"
     },
     {
+      "boot": true,
+      "call": true,
+      "require_path": "../config",
+      "source": "/templates/config",
+      "destination": "app/config",
+      "file": "env.js",
+      "args": ["app"]
+    },
+    {
       "source": "/templates",
       "destination": "app",
       "file": "app.js"
@@ -14,7 +23,7 @@
     {
       "source": "/templates",
       "destination": "./",
-      "file": "index.js"
+      "file": "server.js"
     },
     {
       "source": "/templates",
@@ -45,29 +54,19 @@
       "file": "config.js"
     },
     {
-      "source": "/templates/configJson",
-      "destination": "config",
-      "file": "custom-environment-variables.json"
+      "source": "/templates",
+      "destination": "./",
+      "file": ".env.development"
     },
     {
-      "source": "/templates/configJson",
-      "destination": "config",
-      "file": "default.json"
+      "source": "/templates",
+      "destination": "./",
+      "file": ".env.production"
     },
     {
-      "source": "/templates/configJson",
-      "destination": "config",
-      "file": "development.json"
-    },
-    {
-      "source": "/templates/configJson",
-      "destination": "config",
-      "file": "production.json"
-    },
-    {
-      "source": "/templates/configJson",
-      "destination": "config",
-      "file": "test.json"
+      "source": "/templates",
+      "destination": "./",
+      "file": ".env.test"
     },
     {
       "source": "/templates/prebuild/base",
@@ -78,16 +77,36 @@
       "source": "/templates/prebuild/base",
       "destination": "app/modules/base",
       "file": "route.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "storage.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "errorHandler.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "sendEmail.js"
     }
   ],
   "setupDB": [
     {
       "boot": true,
-      "call":true,
+      "call": true,
       "require_path": "./",
       "source": "/templates/boot",
       "destination": "app/boot",
       "file": "validation.js"
+    },
+    {
+      "source": "/templates/config",
+      "destination": "app/config",
+      "file": "acl.json"
     },
     {
       "boot": true,
@@ -101,6 +120,11 @@
       "source": "/templates/middleware",
       "destination": "app/middleware",
       "file": "validateObjectId.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "pagination.js"
     }
   ],
   "auth": [
@@ -143,6 +167,33 @@
       "source": "/templates/test/integration/users",
       "destination": "tests/integration/users",
       "file": "route.test.js"
+    },
+    {
+      "source": "/templates/test/integration/groups",
+      "destination": "tests/integration/groups",
+      "file": "route.test.template.js"
+    },
+    {
+      "source": "/templates/test/integration/modules",
+      "destination": "tests/integration/modules",
+      "file": "route.test.template.js"
+    },
+    {
+      "source": "/templates/test/integration/roles",
+      "destination": "tests/integration/roles",
+      "file": "route.test.template.js"
+    },
+    {
+      "source": "/templates/temp",
+      "destination": "./temp",
+      "file": "initializer.js"
+    }
+  ],
+  "createsuperuser": [
+    {
+      "source": "/templates/temp",
+      "destination": "./temp",
+      "file": "createsuperuser.js"
     }
   ],
   "createModule": [
@@ -165,11 +216,6 @@
       "source": "/templates/test/integration",
       "destination": "tests/integration/<module>",
       "file": "route.test.js"
-    },
-    {
-      "source": "/templates/utils",
-      "destination": "app/utils",
-      "file": "pagination.js"
     }
   ],
   "controller": [

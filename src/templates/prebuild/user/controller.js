@@ -4,7 +4,7 @@
  */
 const _ = require("lodash");
 const flowDebugger = require("debug")("app:flow");
-
+const Page = require("../../utils/pagination");
 const bcrypt = require("bcrypt");
 const {
   User,
@@ -17,13 +17,44 @@ const {
 } = require("./model");
 const hashPassword = require("../../utils/hashPassword");
 const { createOTP } = require("../../utils/otp");
+const acl = require("../../config/acl.json");
+
+// GET: => api/v1/users
+exports.fetchAll = async (req, res) => {
+  const documents = await Page({
+    req,
+    Model: User,
+    searchColumn: ["name", "email"],
+  });
+  return res.send({ success: true, ...documents });
+};
+
+// GET: => api/v1/users/:id
+exports.fetch = async (req, res) => {
+  const document = await User.findById(req.params.id);
+  if (!document)
+    return res
+      .status(404)
+      .send({ success: false, message: "User with id not found" });
+  let role = acl[document.role];
+
+  // document["images"] = images("User", document._id);
+
+  return res.send({
+    success: true,
+    data: document,
+    role,
+  });
+};
 
 // GET: => api/v1/users/me
 exports.me = async (req, res) => {
   let document = await User.findById(req.user._id);
 
   if (!document)
-    return res.status(404).send({ message: "Document with id not found" });
+    return res
+      .status(404)
+      .send({ success: false, message: "Document with id not found" });
 
   return res.send({
     success: true,
@@ -35,12 +66,17 @@ exports.me = async (req, res) => {
 exports.update = async (req, res) => {
   const { error } = validateUserUpdate(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let document = await User.findById(req.user._id);
 
   if (!document)
-    return res.status(404).send({ message: "Document with id not found" });
+    return res
+      .status(404)
+      .send({ success: false, message: "Document with id not found" });
 
   user.first_name = req.body.first_name;
 
@@ -61,7 +97,10 @@ exports.update = async (req, res) => {
 exports.register = async (req, res) => {
   const { error } = validate(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email: req.body.email });
 
@@ -96,17 +135,24 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { error } = validateAuth(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(401)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email: req.body.email }).select("+password");
 
   if (!user || (user && !user.active))
-    return res.status(400).send({ message: "Invalid email or password" });
+    return res
+      .status(401)
+      .send({ success: false, message: "Invalid email or password" });
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
 
   if (!validPassword)
-    return res.status(400).send({ message: "Invalid email or password" });
+    return res
+      .status(401)
+      .send({ success: false, message: "Invalid email or password" });
 
   const token = user.generateAuthToken();
 
@@ -117,11 +163,15 @@ exports.login = async (req, res) => {
 exports.senOTP = async (req, res) => {
   const { error } = validateResetPasswordReqeust(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email: req.body.email });
 
-  if (!user) return res.send({ message: "Invalid email or OTP" });
+  if (!user)
+    return res.send({ success: false, message: "Invalid email or OTP" });
 
   let otp = createOTP();
 
@@ -137,7 +187,10 @@ exports.senOTP = async (req, res) => {
 exports.passwordReset = async (req, res) => {
   const { error } = validateOTP(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email: req.body.email }).select(
     "+otp.otp_code +otp.otp_expiry"
@@ -146,7 +199,9 @@ exports.passwordReset = async (req, res) => {
   flowDebugger("Check if valid OTP setting exist");
 
   if (!user || !user.otp || !user.otp.otp_code || !user.otp.otp_expiry)
-    return res.status(400).send({ message: "Invalid email or OTP" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid email or OTP" });
 
   let otp = req.body.otp;
 
@@ -155,7 +210,9 @@ exports.passwordReset = async (req, res) => {
   const currentTimestamp = new Date();
 
   if (user.otp.otp_code !== otp || currentTimestamp > user.otp.otp_expiry) {
-    return res.status(400).send({ message: "Invalid email or OTP" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid email or OTP" });
   }
 
   user.password = await hashPassword(req.body.password);
@@ -167,12 +224,13 @@ exports.passwordReset = async (req, res) => {
   res.send({ success: true, message: "Password reset Successfully" });
 };
 
-
 exports.changePassword = async (req, res) => {
-
   const { error } = validatePassword(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findById(req.user._id);
 
@@ -188,7 +246,10 @@ exports.changePassword = async (req, res) => {
 exports.deactivate = async (req, res) => {
   const { error } = validateOTP(req.body);
 
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ success: false, message: error.details[0].message });
 
   let user = await User.findOne({ email: req.body.email }).select(
     "+otp.otp_code +otp.otp_expiry +password"
@@ -197,7 +258,9 @@ exports.deactivate = async (req, res) => {
   flowDebugger("Check if valid OTP setting exist");
 
   if (!user || !user.otp || !user.otp.otp_code || !user.otp.otp_expiry)
-    return res.status(400).send({ message: "Invalid email or OTP" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid email or OTP" });
 
   let otp = req.body.otp;
 
@@ -206,14 +269,18 @@ exports.deactivate = async (req, res) => {
   const currentTimestamp = new Date();
 
   if (user.otp.otp_code !== otp || currentTimestamp > user.otp.otp_expiry) {
-    return res.status(400).send({ message: "Invalid email or OTP" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid email or OTP" });
   }
 
   flowDebugger("Check if Password");
   const validPassword = await bcrypt.compare(req.body.password, user.password);
 
   if (!validPassword)
-    return res.status(400).send({ message: "Invalid email or password" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid email or password" });
 
   flowDebugger("Deactivate Acount");
   user.active = false;

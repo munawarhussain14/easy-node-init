@@ -1,9 +1,10 @@
-const { initialze, fileExist } = require("../helper");
+const { initialze, fileExist, updateACL } = require("../helper");
 const path = require("path");
 const pluralize = require("pluralize");
 const files = require("../file.json");
+const { exec } = require("child_process");
 
-module.exports = function (moduleName) {
+function auth(moduleName) {
   let rootPath = path.join(process.cwd(), "app");
   let dbPath = path.join(process.cwd(), "app/config/database.js");
   if (!fileExist(rootPath)) {
@@ -31,7 +32,48 @@ module.exports = function (moduleName) {
       with: capitalModuleName,
     },
   ];
+
   files.auth.map((obj) => {
     initialze(obj, replace);
   });
-};
+
+  updateACL(process.cwd(),"users");
+
+  // setTimeout(() => {
+  //   exec("node ./temp/initializer.js", (error, stdout, stderr) => {
+  //     if (error) {
+  //       console.error(`Error initializer command: ${error}`);
+  //     } else {
+  //       console.log(`Setup Initial Configuration...`);
+  //       console.log("Configuration successfully.");
+  //     }
+  //     exec("rm ./temp/initializer.js", (error, stdout, stderr) => {});
+  //   });
+  // }, 2000);
+}
+
+function createUser(email, firstName, lastName, password) {
+  files.createsuperuser.map((obj) => {
+    initialze(obj, []);
+  });
+  console.log(
+    `node ./temp/createsuperuser.js ${email} ${firstName} ${lastName} ${password}`
+  );
+  setTimeout(() => {
+    exec(
+      `node ./temp/createsuperuser.js ${email} ${firstName} ${lastName} ${password}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error initializer command: ${error}`);
+        } else {
+          console.log(`Super User Created Successfully`);
+          // console.log("Configuration successfully.");
+        }
+        exec("rm ./temp/createsuperuser.js", (error, stdout, stderr) => {});
+      }
+    );
+  }, 2000);
+}
+
+module.exports.createUser = createUser;
+module.exports.auth = auth;

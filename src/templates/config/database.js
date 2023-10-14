@@ -4,11 +4,10 @@
  */
 const mongoose = require("mongoose");
 const databaseDebugeger = require("debug")("app:db");
-const config = require("config");
 
 function database() {
-  databaseDebugeger(`Connecting to MongoDB Host: ${config.get("db")}...`);
-  mongoose.connect(config.get("db")).then((connection) => {
+  databaseDebugeger(`Connecting to MongoDB Host: ${process.env.DATABASE_URL}...`);
+  mongoose.connect(process.env.DATABASE_URL).then((connection) => {
     databaseDebugeger(
       `Connected to MongoDB Host: ${connection.connection.host}`
     );

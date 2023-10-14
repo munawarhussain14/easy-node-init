@@ -2,10 +2,10 @@
  * Create By: easy-node-init
  * Create Date: **create_date**
  */
-const config = require("config");
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const { populateFile, fileFields } = require("../../utils/populate");
 
 const otpSchema = new mongoose.Schema({
   otp_code: {
@@ -31,15 +31,17 @@ const verificationSchema = new mongoose.Schema({
   },
 });
 
+const userRoles = ["user", "admin", "superadmin"];
+
 const User = new mongoose.Schema({
   first_name: {
     type: String,
     required: true,
-    max: 20,
+    max: 50,
   },
   last_name: {
     type: String,
-    max: 20,
+    max: 50,
   },
   email: {
     type: String,
@@ -52,8 +54,30 @@ const User = new mongoose.Schema({
     minlength: [6, "Your password must be longer than 6 characters"],
     select: false,
   },
+  featured: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "File",
+  },
+  avatar: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "File",
+  },
+  cover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "File",
+  },
+  gallery: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+    },
+  ],
   otp: otpSchema,
-  isAdmin: Boolean,
+  role: {
+    type: String,
+    enum: userRoles,
+    default: "user",
+  },
   active: {
     type: Boolean,
     default: true,
@@ -65,10 +89,26 @@ const User = new mongoose.Schema({
   verificaiton: verificationSchema,
 });
 
+User.pre("find", function () {
+  this.populate(populateFile(this), fileFields);
+});
+
+User.pre("findById", function () {
+  this.populate(populateFile(this), fileFields);
+});
+
+User.pre("findOne", function () {
+  this.populate(populateFile(this), fileFields);
+});
+
 User.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    { _id: this._id, isAdmin: this.isAdmin },
-    config.get("jwtPrivateKey")
+    {
+      _id: this._id,
+      name: `${this.first_name} ${this.last_name}`,
+      role: this.role,
+    },
+    process.env.SECRET_KEY
   );
   return token;
 };

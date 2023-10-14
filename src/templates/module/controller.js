@@ -66,6 +66,10 @@ exports.update = async (req, res) => {
 
 // DELETE: => api/v1/**route_name**
 exports.remove = async (req, res) => {
+  const document = await **model_name**.findById(req.params.id);
+  if (!document)
+    return res.status(404).send({ message: "Document with id not found" });
+
   const result = await **model_name**.findByIdAndDelete(req.params.id);
   return res.send({
     success: true,

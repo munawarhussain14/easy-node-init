@@ -3,7 +3,7 @@ const path = require("path");
 const files = require("../file.json");
 const { exec } = require("child_process");
 
-module.exports = function () {
+module.exports = async function () {
   let rootPath = path.join(process.cwd(), "app");
   if (fileExist(rootPath)) {
     console.warn(`Initial setup run once`);
@@ -12,7 +12,7 @@ module.exports = function () {
 
   console.log(`Installing necessary packages...`);
   exec(
-    "npm i config express express-async-errors helmet lodash jest supertest joi joi-objectid morgan bcrypt jsonwebtoken mongoose",
+    "npm i dotenv multer sharp cors express express-async-errors helmet lodash jest supertest joi joi-objectid morgan bcrypt jsonwebtoken mongoose",
     (error, stdout, stderr) => {
       if (error) {
         console.error(`Error running npm command: ${error}`);
@@ -23,6 +23,7 @@ module.exports = function () {
         files.setup.map((obj) => {
           initialze(obj);
         });
+        require("../cmd/init-db")();
       }
     }
   );

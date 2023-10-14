@@ -28,15 +28,6 @@ npm install -g easy-node-init
 sudo npm install -g easy-node-init
 ```
 
-add it in `package.json`
-
-```json
-"scripts": {
-    "start": "nodemon index.js",
-    "test": "jest --watchAll --verbose --coverage --maxWorkers=1"
-},
-```
-
 To set your secret key in an environment variable run the command:
 
 ```shell
@@ -70,7 +61,7 @@ Make sure to replace `<your-secret-key>` with your actual secret key when settin
 Use the following command to initialize a basic setup for an Express-based API:
 
 ```bash
-easy-node-init setup
+eni setup
 ```
 
 [Initialize Basic Express Setup](https://www.youtube.com/watch?v=ZlsmPEERouQ)
@@ -80,7 +71,7 @@ easy-node-init setup
 To set up essential files for Mongoose, execute the following command:
 
 ```bash
-easy-node-init db-setup
+eni db-setup
 ```
 
 ### Initialize User Module
@@ -88,7 +79,7 @@ easy-node-init db-setup
 Create a user module with all the required functions, along with test files, using the following command:
 
 ```bash
-easy-node-init auth
+eni auth
 ```
 
 ### Create a New Module
@@ -96,7 +87,7 @@ easy-node-init auth
 Generate a module with auto-generated controller, module, route, and integration test for it by running the following command, replacing `<module-name>` with your desired module name:
 
 ```bash
-easy-node-init create-module <module-name>
+eni create-module <module-name>
 ```
 
 ### Create a New Controller
@@ -104,7 +95,7 @@ easy-node-init create-module <module-name>
 Create a new controller with auto-generated routes and integration tests by using the following command, replacing `<controller-name>` with your desired controller name:
 
 ```bash
-easy-node-init create-controller <controller-name>
+eni create-controller <controller-name>
 ```
 
 ## License

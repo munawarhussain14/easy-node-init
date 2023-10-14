@@ -7,14 +7,13 @@ const fs = require("fs");
 const path = require("path");
 const error = require("./middleware/error");
 const startupDebugger = require("debug")("app:startup");
-const config = require("config");
 
 module.exports = function (app) {
   startupDebugger("Route maping...");
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("public"));
-  let api = config.get("api_version");
+  let api = process.env.api_version;
   const modulesDir = path.join(__dirname, "modules");
 
   fs.readdirSync(modulesDir).forEach((moduleName) => {

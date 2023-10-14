@@ -1,25 +1,25 @@
 /**
  * Create By: easy-node-init
- * Create Date: **create_date**
+ * Create Date: 9/29/2023, 10:29:08 AM
  */
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const startupDebugger = require("debug")("app:startup");
 const app = express();
+const cors = require("cors");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
 app.use(helmet());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+  })
+);
 
-if (app.get("env") === "development") {
-  app.use(morgan("tiny"));
-  startupDebugger("Morgan enabled...");
-}
-
-require("./route.js")(app);
 require("./boot/boot.js")(app);
+require("./route.js")(app);
 
 app.get("/", (req, res) => {
   res.send(

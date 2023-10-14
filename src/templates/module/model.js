@@ -10,8 +10,9 @@ const **model_name** = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    max: 50,
+    max: 100,
   },
+  description: String
 },{
   timestamps:true
 });
@@ -19,6 +20,7 @@ const **model_name** = new mongoose.Schema({
 function validate(data) {
   const schema = Joi.object({
     name: Joi.string().required().min(5).max(20),
+    description: Joi.string().min(5).max(500),
   });
 
   return schema.validate(data);

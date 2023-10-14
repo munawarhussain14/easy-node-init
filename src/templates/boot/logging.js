@@ -4,7 +4,6 @@
  */
 
 require("express-async-errors");
-const config = require("config");
 
 module.exports = function () {
   process.on("uncaughtException", (ex) => {

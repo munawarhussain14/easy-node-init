@@ -3,7 +3,7 @@ const path = require("path");
 const { boot } = require("./file.json");
 
 exports.initialze = async function (data, replace = []) {
-  const { boot, call, source, destination, file, require_path } = data;
+  const { boot, call, source, destination, file, require_path, args } = data;
   let check = await createDir(destination);
   if (check) {
     let destination_file = path.join(destination, file);
@@ -34,7 +34,13 @@ exports.initialze = async function (data, replace = []) {
             // console.log("filePath:", filePath); // Output: ../middleware
 
             if (call) {
-              code = `require("${filePath}")();\n/**end-line */`;
+              if (args) {
+                code = `require("${filePath}")(${args.join(
+                  ","
+                )});\n/**end-line */`;
+              } else {
+                code = `require("${filePath}")();\n/**end-line */`;
+              }
             } else {
               code = `let ${name} = require("${filePath}");\n\tapp.use(${name});\n/**end-line */`;
             }
@@ -139,3 +145,82 @@ function addToBoot(replacements) {
   console.log(`boot.js File updated`);
   return true;
 }
+
+exports.updatePacakge = function (rootDir) {
+  // Load the package.json file
+  const packagePath = path.join(rootDir, "package.json");
+  const packageJson = require(packagePath);
+
+  // Update the test script
+  packageJson.scripts.start = "nodemon server.js";
+  packageJson.scripts.test =
+    "jest --watchAll --verbose --coverage --maxWorkers=1";
+
+  // Write the updated package.json file
+  fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+};
+
+exports.updateACL = function (rootDir, module) {
+  // Load the package.json file
+  const aclPath = path.join(rootDir, "/app/config/acl.json");
+  let aclJson = require(aclPath);
+
+  if (module === "users") {
+    // Update the test script
+    aclJson.superadmin[module] = {
+      fetchAll: true,
+      fetch: true,
+      create: true,
+      update: true,
+      remove: true,
+      avatar: true,
+      me: true,
+      changePassword: true,
+      deactivate: true,
+    };
+    aclJson.admin[module] = {
+      avatar: false,
+      fetch: false,
+      fetchAll: false,
+      me: true,
+      update: true,
+      changePassword: true,
+      deactivate: true,
+    };
+    aclJson.user[module] = {
+      avatar: true,
+      fetch: false,
+      fetchAll: false,
+      me: true,
+      update: true,
+      changePassword: true,
+      deactivate: true,
+    };
+  } else {
+    // Update the test script
+    aclJson.superadmin[module] = {
+      fetchAll: true,
+      fetch: true,
+      create: true,
+      update: true,
+      remove: true,
+    };
+    aclJson.admin[module] = {
+      fetchAll: true,
+      fetch: true,
+      create: true,
+      update: true,
+      remove: true,
+    };
+    aclJson.user[module] = {
+      fetchAll: true,
+      fetch: true,
+      create: true,
+      update: true,
+      remove: true,
+    };
+  }
+
+  // Write the updated acl.json file
+  fs.writeFileSync(aclPath, JSON.stringify(aclJson, null, 2));
+};

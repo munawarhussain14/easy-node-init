@@ -1,4 +1,4 @@
-const { initialze, fileExist } = require("../helper");
+const { initialze, fileExist, updateACL } = require("../helper");
 const path = require("path");
 const pluralize = require("pluralize");
 const files = require("../file.json");
@@ -37,7 +37,7 @@ module.exports = function (moduleName) {
   ];
   files.createModule.map((obj) => {
     obj.destination = obj.destination.replace("<module>", routeName);
-
     initialze(obj, replace);
   });
+  updateACL(process.cwd(),routeName);
 };

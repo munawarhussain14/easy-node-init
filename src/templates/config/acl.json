@@ -1,0 +1,20 @@
+{
+    "superadmin":{
+        "dashboard": {
+            "fetchAll": true
+          },
+        "base":{
+            "fetch": true
+          }
+    },
+    "admin":{
+        "base":{
+            "fetch": true
+          }
+    },
+    "user":{
+        "base":{
+            "fetch": true
+          }
+    }
+}

@@ -4,6 +4,6 @@
  */
 
 // GET: => api/v1/
-exports.get = async (req, res) => {
+exports.fetch = async (req, res) => {
   res.send({ title: "Easy Node Init by Munawar Hussain", documentation: "" });
 };

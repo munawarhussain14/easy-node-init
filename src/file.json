@@ -86,6 +86,16 @@
     {
       "source": "/templates/utils",
       "destination": "app/utils",
+      "file": "mkdir.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "populate.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
       "file": "errorHandler.js"
     },
     {
@@ -125,6 +135,11 @@
       "source": "/templates/utils",
       "destination": "app/utils",
       "file": "pagination.js"
+    },
+    {
+      "source": "/templates/utils",
+      "destination": "app/utils",
+      "file": "filter.js"
     }
   ],
   "auth": [
@@ -234,5 +249,70 @@
       "destination": "tests/integration/<module>",
       "file": "route.test.js"
     }
-  ]
+  ],
+  "nextjs": {
+    "module":[
+      [
+        {
+          "source": "/templates/nextjs/app/actions",
+          "destination": "app/actions",
+          "file": "action.ts",
+          "rename":true
+        },
+        {
+          "source": "/templates/nextjs/app/actions/schema",
+          "destination": "app/actions/schema",
+          "file": "schema.ts",
+          "rename":true
+        },
+        {
+          "source": "/templates/nextjs/app/service",
+          "destination": "app/service",
+          "file": "service.ts",
+          "rename":true
+        },
+        {
+          "source": "/templates/nextjs/app/inteface",
+          "destination": "app/interface",
+          "file": "interface.ts",
+          "rename":true
+        },
+        {
+          "source": "/templates/nextjs/app/page",
+          "destination": "app/<module>/",
+          "file": "pageConfig.ts"
+        },
+        {
+          "source": "/templates/nextjs/app/page",
+          "destination": "app/<module>",
+          "file": "page.tsx"
+        },
+        {
+          "source": "/templates/nextjs/app/page/[id]",
+          "destination": "app/<module>/[id]",
+          "file": "page.tsx"
+        },
+        {
+          "source": "/templates/nextjs/app/page/edit/[id]",
+          "destination": "app/<module>/edit/[id]",
+          "file": "page.tsx"
+        },
+        {
+          "source": "/templates/nextjs/app/page/form",
+          "destination": "app/<module>/form",
+          "file": "form.tsx"
+        },
+        {
+          "source": "/templates/nextjs/app/page/new",
+          "destination": "app/<module>/new",
+          "file": "page.tsx"
+        },
+        {
+          "source": "/templates/nextjs/app/utils",
+          "destination": "app/utils",
+          "file": "FormDataToJson.tsx"
+        }
+      ]
+    ]
+  }
 }

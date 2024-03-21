@@ -3,7 +3,8 @@ const path = require("path");
 const { boot } = require("./file.json");
 
 exports.initialze = async function (data, replace = []) {
-  const { boot, call, source, destination, file, require_path, args } = data;
+  const { boot, call, source, destination, file, require_path, args, rename } =
+    data;
   let check = await createDir(destination);
   if (check) {
     let destination_file = path.join(destination, file);

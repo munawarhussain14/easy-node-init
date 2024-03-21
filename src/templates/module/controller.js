@@ -60,7 +60,7 @@ exports.update = async (req, res) => {
   return res.send({
     success: true,
     data: result,
-    message: "**model_name** dpdated!",
+    message: "**model_name** Updated!",
   });
 };
 

@@ -19,8 +19,8 @@ const **model_name** = new mongoose.Schema({
 
 function validate(data) {
   const schema = Joi.object({
-    name: Joi.string().required().min(5).max(20),
-    description: Joi.string().min(5).max(500),
+    name: Joi.string().required().min(5).max(20).label("Name"),
+    description: Joi.string().allow("").min(5).max(500).label("Description"),
   });
 
   return schema.validate(data);
